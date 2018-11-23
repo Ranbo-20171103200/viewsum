@@ -7,48 +7,41 @@
 //
 
 import UIKit
-
+class calculate
+{
+    public var a = 0
+    public var c = "a"
+    public var num:Array = [Int]()
+    init() {
+    }
+}
 class ViewController: UIViewController {
     @IBOutlet weak var x: UITextField!
+    var a = 0
+    var b = 0
+    var c = "a"
+    var i = 0
+    var flag = 0
+    var cal = calculate()
     @IBAction func sum(_ sender: Any) {
-        if(x.text != ""||cnt1%2==0)
+        if(x.text != "")
         {
-            a = Int(x.text!)!
-            c = "+"
-            x.text = ""
+            if(x.text != "-")
+            {
+                cal.a = Int(x.text!)!
+                cal.c = "+"
+                x.text = ""
+            }
+            else
+            {
+                x.text = ""
+            }
         }
         if(c=="-"||c=="*"||c=="/")
         {
             c = "+"
         }
-        if(cnt1%2 != 0&&x.text != "")
-        {
-            b = Int(x.text!)!
-            x.text = ""
-            if(c=="+")
-            {
-                b=a+b;
-            }
-            if(c=="-")
-            {
-                b=a-b;
-            }
-            if(c=="*")
-            {
-                b=a*b;
-            }
-            if(c=="/")
-            {
-                b=a/b;
-            }
-        }
-        cnt1 = cnt1 + 1
     }
-    var a = 0
-    var b = 0
-    var c = "a"
-    var flag = 0
-    var cnt1 = 0
     @IBAction func num1(_ sender: Any) {
         x.text = x.text! + "1"
     }
@@ -89,9 +82,16 @@ class ViewController: UIViewController {
         {
             if(x.text != "")
             {
-                a = Int(x.text!)!
-                c = "-"
-                x.text = ""
+                if(x.text != "-")
+                {
+                    a = Int(x.text!)!
+                    c = "-"
+                    x.text = ""
+                }
+                else
+                {
+                    x.text = ""
+                }
             }
             if(c=="+"||c=="*"||c=="/")
             {
@@ -102,9 +102,16 @@ class ViewController: UIViewController {
     @IBAction func mul(_ sender: Any) {
         if(x.text != "")
         {
-            a = Int(x.text!)!
-            c = "*"
-            x.text = ""
+            if(x.text != "-")
+            {
+                a = Int(x.text!)!
+                c = "*"
+                x.text = ""
+            }
+            else
+            {
+                x.text = ""
+            }
         }
         if(c=="-"||c=="+"||c=="/")
         {
@@ -114,9 +121,16 @@ class ViewController: UIViewController {
     @IBAction func dismul(_ sender: Any) {
         if(x.text != "")
         {
-            a = Int(x.text!)!
-            c = "/"
-            x.text = ""
+            if(x.text != "-")
+            {
+                a = Int(x.text!)!
+                c = "/"
+                x.text = ""
+            }
+            else
+            {
+                x.text = ""
+            }
         }
         if(c=="+"||c=="*"||c=="-")
         {
@@ -126,22 +140,50 @@ class ViewController: UIViewController {
     @IBAction func result(_ sender: Any) {
         if(c=="-")
         {
-            b = -Int(x.text!)!
-            x.text = "\(a+b)"
+            if(x.text != "")
+            {
+                b = -Int(x.text!)!
+                x.text = "\(a+b)"
+            }
+            else
+            {
+                x.text = "\(a)"
+            }
         }
-        if(c=="+")
+        if(cal.c=="+")
         {
-            b = Int(x.text!)!
-            x.text = "\(a+b)"
+            if(x.text != "")
+            {
+                b = Int(x.text!)!
+                x.text = "\(cal.a+b)"
+            }
+            else
+            {
+                x.text = "\(a)"
+            }
         }
         if(c=="*")
         {
-            b = Int(x.text!)!
-            x.text = "\(a*b)"
+            if(x.text != "")
+            {
+                b = Int(x.text!)!
+                x.text = "\(a*b)"
+            }
+            else
+            {
+                x.text = "\(a)"
+            }
         }
         if(c=="/")
         {
-            b = Int(x.text!)!
+            if(x.text != "")
+            {
+                b = Int(x.text!)!
+            }
+            else
+            {
+                x.text = "\(a)"
+            }
             if(b != 0)
             {
                 x.text = "\(a/b)"
