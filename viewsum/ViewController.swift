@@ -51,7 +51,10 @@ class ViewController: UIViewController {
     var c = "a"
     var i = 0
     var flag = 0
+    var temp = 0
+    var temp1 = 0
     var cal = calculate()
+    var ca = calculate()
     @IBAction func sum(_ sender: Any) {
         if(cal.c=="-"||cal.c=="*"||cal.c=="/")
         {
@@ -110,30 +113,19 @@ class ViewController: UIViewController {
         {
             cal.c="-"
         }
-        if(cal.a==0&&flag==0&&x.text=="")
+        if(x.text != "")
         {
-            x.text = x.text! + "-"
-            flag = 1
+            cal.a = Int(x.text!)!
+            cal.c = "-"
+            cal.Push()
+            cal.Pushs()
+            cal.add()
+            cal.adds()
+            x.text = ""
         }
         else
         {
-            if(x.text != "")
-            {
-                if(x.text != "-")
-                {
-                    cal.a = Int(x.text!)!
-                    cal.c = "-"
-                    cal.Push()
-                    cal.Pushs()
-                    cal.add()
-                    cal.adds()
-                    x.text = ""
-                }
-                else
-                {
-                    x.text = ""
-                }
-            }
+            x.text = ""
         }
     }
     @IBAction func mul(_ sender: Any) {
@@ -189,51 +181,70 @@ class ViewController: UIViewController {
             cal.Push()
             cal.add()
         }
-        while cal.i != 0 {
-            a=cal.Pop()
+        while cal.i != -1{
+            ca.a=cal.Pop()
             cal.d()
-            b=cal.Pop()
-            cal.d()
-            c=cal.Pops()
+            ca.Push()
+            ca.add()
+        }
+        while cal.j != -1 {
+            ca.c=cal.Pops()
             cal.ds()
-            if(c=="+")
+            ca.Pushs()
+            ca.adds()
+        }
+        while ca.i != 0 {
+            ca.c=ca.Pops()
+            ca.ds()
+            a=ca.Pop()
+            ca.d()
+            if(ca.c=="/")
             {
-                cal.a=a+b
-                cal.Push()
-                cal.add()
+                b=ca.Pop()
+                ca.d()
+                ca.a=a/b
+                ca.Push()
+                ca.add()
             }
-            if(c=="-")
+            if(ca.c=="*")
             {
-                cal.a=b-a
-                cal.Push()
-                cal.add()
+                b=ca.Pop()
+                ca.d()
+                ca.a=a*b
+                ca.Push()
+                ca.add()
             }
-            if(c=="*")
+            if(ca.c=="+")
             {
-                cal.a=a*b
-                cal.Push()
-                cal.add()
+                b=ca.Pop()
+                ca.d()
+                ca.a=a+b
+                ca.Push()
+                ca.add()
             }
-            if(c=="/")
+            if(ca.c=="-")
             {
-                cal.a=b/a
-                cal.Push()
-                cal.add()
+                b=ca.Pop()
+                ca.d()
+                ca.a=a-b
+                ca.Push()
+                ca.add()
             }
         }
-        x.text="\(cal.Pop())"
-        cal.a=0
-        a=0
-        b=0
-        cal.c="a"
+        x.text="\(ca.Pop())"
     }
     @IBAction func empty(_ sender: Any) {
         x.text = ""
-        cal.a = 0
         b = 0
         a = 0
+        cal.a = 0
         cal.c = "a"
+        cal.j = -1
         cal.i = -1
+        ca.a = 0
+        ca.c = "a"
+        ca.j = -1
+        ca.i = -1
         flag = 0
     }
     @IBAction func dot(_ sender: Any) {
