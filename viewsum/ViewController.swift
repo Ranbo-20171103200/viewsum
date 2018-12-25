@@ -9,16 +9,16 @@
 import UIKit
 class calculate
 {
-    public var a = 0
+    public var a = 0.0
     public var c = "a"
     public var i = -1
     public var j = -1
-    public var num:Array = [Int]()
+    public var num:Array = [Double]()
     public var calcu:Array = [String]()
     func Push(){
         num.append(self.a)
     }
-    func Pop() -> Int {
+    func Pop() -> Double {
         return self.num.remove(at: self.i)
     }
     func Pushs(){
@@ -46,25 +46,21 @@ class calculate
 }
 class ViewController: UIViewController {
     @IBOutlet weak var x: UITextField!
-    var a = 0
-    var b = 0
+    var a = 0.0
+    var b = 0.0
     var c = "a"
-    var i = 0
+    var d = 0.0
+    var e = "a"
     var flag = 0
-    var temp = 0
-    var temp1 = 0
+    var flag1 = 0
     var cal = calculate()
     var ca = calculate()
     @IBAction func sum(_ sender: Any) {
-        if(cal.c=="-"||cal.c=="*"||cal.c=="/")
-        {
-            cal.c = "+"
-        }
         if(x.text != "")
         {
             if(x.text != "-")
             {
-                cal.a = Int(x.text!)!
+                cal.a = Double(x.text!)!
                 cal.c = "+"
                 cal.Push()
                 cal.Pushs()
@@ -76,6 +72,19 @@ class ViewController: UIViewController {
             {
                 x.text = ""
             }
+        }
+        else if(cal.calcu[cal.j] != "+")
+        {
+            cal.calcu[cal.j] = "+"
+        }
+        flag=0
+    }
+    
+    @IBAction func point(_ sender: Any) {
+        if(x.text != ""&&x.text != "-"&&flag1==0)
+        {
+            x.text = x.text! + "."
+            flag1=1
         }
     }
     @IBAction func num1(_ sender: Any) {
@@ -109,35 +118,35 @@ class ViewController: UIViewController {
         x.text = x.text! + "0"
     }
     @IBAction func dec(_ sender: Any) {
-        if(cal.c=="+"||cal.c=="*"||cal.c=="/")
-        {
-            cal.c="-"
-        }
-        if(x.text != "")
-        {
-            cal.a = Int(x.text!)!
-            cal.c = "-"
-            cal.Push()
-            cal.Pushs()
-            cal.add()
-            cal.adds()
-            x.text = ""
-        }
-        else
-        {
-            x.text = ""
-        }
-    }
-    @IBAction func mul(_ sender: Any) {
-        if(cal.c=="-"||cal.c=="+"||cal.c=="/")
-        {
-            cal.c="*"
-        }
         if(x.text != "")
         {
             if(x.text != "-")
             {
-                cal.a = Int(x.text!)!
+                cal.a = Double(x.text!)!
+                cal.c = "-"
+                cal.Push()
+                cal.Pushs()
+                cal.add()
+                cal.adds()
+                x.text = ""
+            }
+            else
+            {
+                x.text = ""
+            }
+        }
+        else if(cal.calcu[cal.j] != "-")
+        {
+            cal.calcu[cal.j] = "-"
+        }
+        flag=0
+    }
+    @IBAction func mul(_ sender: Any) {
+        if(x.text != "")
+        {
+            if(x.text != "-")
+            {
+                cal.a = Double(x.text!)!
                 cal.c = "*"
                 cal.Push()
                 cal.Pushs()
@@ -150,17 +159,18 @@ class ViewController: UIViewController {
                 x.text = ""
             }
         }
+        else if(cal.calcu[cal.j] != "*")
+        {
+            cal.calcu[cal.j] = "*"
+        }
+        flag=0
     }
     @IBAction func dismul(_ sender: Any) {
-        if(cal.c=="+"||cal.c=="*"||cal.c=="-")
-        {
-            cal.c="/"
-        }
         if(x.text != "")
         {
             if(x.text != "-")
             {
-                cal.a = Int(x.text!)!
+                cal.a = Double(x.text!)!
                 cal.c = "/"
                 cal.Push()
                 cal.Pushs()
@@ -173,11 +183,18 @@ class ViewController: UIViewController {
                 x.text = ""
             }
         }
+        else if(cal.calcu[cal.j] != "/")
+        {
+            cal.calcu[cal.j] = "/"
+        }
+        flag=0
     }
     @IBAction func result(_ sender: Any) {
-        if(x.text != "")
+        if (x.text != ""&&flag==0&&x.text != "-")
         {
-            cal.a = Int(x.text!)!
+        if(x.text != "-")
+        {
+            cal.a = Double(x.text!)!
             cal.Push()
             cal.add()
         }
@@ -202,9 +219,18 @@ class ViewController: UIViewController {
             {
                 b=ca.Pop()
                 ca.d()
+                if(b != 0)
+                {
                 ca.a=a/b
                 ca.Push()
                 ca.add()
+                }
+                else
+                {
+                    ca.a=0
+                    ca.Push()
+                    ca.add()
+                }
             }
             if(ca.c=="*")
             {
@@ -218,25 +244,115 @@ class ViewController: UIViewController {
             {
                 b=ca.Pop()
                 ca.d()
-                ca.a=a+b
-                ca.Push()
-                ca.add()
+                if(ca.i >= 0)
+                {
+                    e=ca.Pops()
+                    ca.ds()
+                    if(e=="*")
+                    {
+                        d=ca.Pop()
+                        ca.d()
+                        ca.a=a+b*d
+                        ca.Push()
+                        ca.add()
+                        
+                    }
+                    else if(e=="/")
+                    {
+                        d=ca.Pop()
+                        ca.d()
+                        ca.a=a+b/d
+                        ca.Push()
+                        ca.add()
+                        
+                    }
+                    else
+                    {
+                        ca.c=e
+                        ca.Pushs()
+                        ca.adds()
+                        ca.a=a+b
+                        ca.Push()
+                        ca.add()
+                        ca.c="+"
+                    }
+                }
+                else
+                {
+                    ca.a=a+b
+                    ca.Push()
+                    ca.add()
+                }
             }
             if(ca.c=="-")
             {
                 b=ca.Pop()
                 ca.d()
-                ca.a=a-b
-                ca.Push()
-                ca.add()
+                if(ca.i >= 0)
+                {
+                    e=ca.Pops()
+                    ca.ds()
+                    if(e=="*")
+                    {
+                        d=ca.Pop()
+                        ca.d()
+                        ca.a=a-b*d
+                        ca.Push()
+                        ca.add()
+                        
+                    }
+                    else if(e=="/")
+                    {
+                        d=ca.Pop()
+                        ca.d()
+                        ca.a=a-b/d
+                        ca.Push()
+                        ca.add()
+                        
+                    }
+                    else
+                    {
+                        ca.c=e
+                        ca.Pushs()
+                        ca.adds()
+                        ca.a=a-b
+                        ca.Push()
+                        ca.add()
+                        ca.c="-"
+                    }
+                }
+                else
+                {
+                    ca.a=a-b
+                    ca.Push()
+                    ca.add()
+                }
             }
         }
         x.text="\(ca.Pop())"
+        ca.d()
+        flag=1
+        }
+        if(x.text=="")
+        {
+            if(cal.i == 0)
+            {
+                x.text="\(cal.Pop())"
+                cal.d()
+            }
+        }
+        if(x.text == "-")
+        {
+            x.text=""
+        }
     }
     @IBAction func empty(_ sender: Any) {
         x.text = ""
         b = 0
         a = 0
+        d = 0
+        e = "a"
+        c = "a"
         cal.a = 0
         cal.c = "a"
         cal.j = -1
@@ -246,9 +362,17 @@ class ViewController: UIViewController {
         ca.j = -1
         ca.i = -1
         flag = 0
+        flag1 = 0
     }
     @IBAction func dot(_ sender: Any) {
-        x.text = x.text! + "."
+        if(x.text != "")
+        {
+            x.text = "\(-Double(x.text!)!)"
+        }
+        else
+        {
+            x.text = "-"
+        }
     }
     @IBAction func delet(_ sender: Any) {
         if(x.text != "")
