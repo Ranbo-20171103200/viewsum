@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 class calculate
 {
     public var a = 0.0
@@ -45,6 +46,93 @@ class calculate
     }
 }
 class ViewController: UIViewController {
+    @IBAction func TAN(_ sender: Any) {
+        var temp = x.text!.remove(at: x.text!.index(before: x.text!.endIndex))
+        if(temp=="π")
+        {
+            if(x.text != "")
+            {
+                x.text = "\(tan(Double(x.text!)!*Double.pi))"
+            }
+            else
+            {
+                x.text = "\(tan(Double.pi))"
+            }
+        }
+        else
+        {
+            if(x.text != "")
+            {
+                x.text = "\(tan(Double(x.text!)!*(Double(String(temp)))!))"
+            }
+            else
+            {
+                x.text = "\(tan(Double(String(temp))!))"
+            }
+        }
+    }
+    @IBAction func COS(_ sender: Any) {
+        var temp = x.text!.remove(at: x.text!.index(before: x.text!.endIndex))
+        if(temp=="π")
+        {
+            if(x.text != "")
+            {
+                x.text = "\(cos(Double(x.text!)!*Double.pi))"
+            }
+            else
+            {
+                x.text = "\(cos(Double.pi))"
+            }
+        }
+        else
+        {
+            if(x.text != "")
+            {
+                x.text = "\(cos(Double(x.text!)!*(Double(String(temp)))!))"
+            }
+            else
+            {
+                x.text = "\(cos(Double(String(temp))!))"
+            }
+        }
+    }
+    @IBAction func PI(_ sender: Any) {
+        x.text = x.text! + "π"
+    }
+    @IBAction func SIN(_ sender: Any) {
+        var temp = x.text!.remove(at: x.text!.index(before: x.text!.endIndex))
+        if(temp=="π")
+        {
+            if(x.text != "")
+            {
+            x.text = "\(sin(Double(x.text!)!*Double.pi))"
+            }
+            else
+            {
+                x.text = "\(sin(Double.pi))"
+            }
+        }
+        else
+        {
+            if(x.text != "")
+            {
+                x.text = "\(sin(Double(x.text!)!*(Double(String(temp)))!))"
+            }
+            else
+            {
+                x.text = "\(sin(Double(String(temp))!))"
+            }
+        }
+    }
+    @IBAction func sq(_ sender: Any) {
+        if Double(x.text!)!>=0 {
+            x.text = "\(sqrt(Double(x.text!)!))"
+        }
+        else
+        {
+            x.text=""
+        }
+    }
     @IBOutlet weak var x: UITextField!
     var a = 0.0
     var b = 0.0
@@ -380,12 +468,13 @@ class ViewController: UIViewController {
             x.text!.remove(at: x.text!.index(before: x.text!.endIndex))
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
     }
 
 
 }
+
 
